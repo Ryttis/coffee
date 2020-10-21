@@ -17,7 +17,7 @@ class CreatePricesTable extends Migration
             $table->id();
             $table->text('title');
             $table->float('price');
-            $table->string('path')->nullable();
+            $table->binary('path')->nullable();
             $table->timestamps();
         });
     }

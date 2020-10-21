@@ -19,12 +19,12 @@
         />
       </div>
       <div class="form-group">
-        <!-- <input
+        <input
           type="file"
           name="image"
           accept="image/*"
           @change="onChange"
-        /> -->
+        />
       </div>
       <!-- <button type="submit" class="btn btn-primary btn-block">Save</button> -->
       <b-button @click="addCoffee()" variant="primary btn-block">Save</b-button>
@@ -41,8 +41,8 @@
           v-for="coffee in coffees"
           v-bind:key="coffee.id"
         >
-          <img :src= coffee.path width="250" height="150">
-          <h3>{{ coffee.price }}</h3>
+          <img :src= coffee.path width="150" height="150">
+          <h3>{{ coffee.price }} $</h3>
 
           <b-card-text>
             {{ coffee.title }}
@@ -66,9 +66,9 @@ export default {
       coffees: [],
       coffee: {
         id: '',
-        title: 'null',
-        path:'null',
-        price: 0,
+        title: '',
+        path:'',
+        price: '',
       },
      
     };
@@ -79,6 +79,25 @@ export default {
   },
   
   methods: {
+    onChange(e){
+      
+      console.log("labas");
+      // if (! e.target.files[0].lenght) return;
+
+            let file = e.target.files[0];
+
+            let reader = new FileReader();
+      
+            reader.readAsDataURL(file);
+            
+            reader.onload = e => {
+                this.coffee.path = e.target.result;
+              //  console.log("Kava"+this.coffee.path);
+                
+            }
+           
+             
+    },
     fetchCoffeeList() {
       axios.get("http://127.0.0.1:8000/api/prices").then((response) => {
         console.log(response.data);
@@ -94,7 +113,6 @@ export default {
         });
     },
     addCoffee() {
-      alert("Vargas")
       let data = new FormData()
         data.append("title", this.coffee.title);
         data.append("price", this.coffee.price);
@@ -103,7 +121,7 @@ export default {
       axios
         .post(`http://127.0.0.1:8000/api/prices`, data )
         .then( (response) => { 
-            console.log(response.data);
+            // console.log(response.data);
         })
         .catch(function (error) {
           console.log(error);

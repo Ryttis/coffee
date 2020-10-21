@@ -4,8 +4,6 @@
              <div>
             <b-card-group deck>
              <b-card
-                title="Card Title"
-                img-src="img/liquoretto.jpg"
                 img-alt="Image"
                 img-top
                 tag="article"
@@ -13,7 +11,9 @@
                 class="mb-2"
                 v-for="coffee in coffees" v-bind:key="coffee.id">
 
-                <h3>{{coffee.price}}</h3>
+                <img :src= coffee.path width="150" height="150">
+
+                <h3>{{coffee.price}} $</h3>
                 
                 <b-card-text>
                   {{coffee.title}}

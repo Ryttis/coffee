@@ -38,11 +38,16 @@ class PricesController extends Controller
      */
     public function store(Request $request)
     {
+        // $v = Validator::make($request, [
+        //     'price' => 'required',
+        //     'title' => 'required',
+        //     'path' => 'file|size:55',
+        // ]);
         $coffee = new Prices;
         $coffee->fill($request->all());
         $coffee->save();
        
-        return $coffee;
+        return response('success');
     
     }
 
