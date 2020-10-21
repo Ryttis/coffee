@@ -25,6 +25,7 @@
           accept="image/*"
           @change="onChange"
         />
+        
       </div>
       <!-- <button type="submit" class="btn btn-primary btn-block">Save</button> -->
       <b-button @click="addCoffee()" variant="primary btn-block">Save</b-button>
@@ -81,9 +82,6 @@ export default {
   methods: {
     onChange(e){
       
-      console.log("labas");
-      // if (! e.target.files[0].lenght) return;
-
             let file = e.target.files[0];
 
             let reader = new FileReader();
@@ -92,7 +90,7 @@ export default {
             
             reader.onload = e => {
                 this.coffee.path = e.target.result;
-              //  console.log("Kava"+this.coffee.path);
+              
                 
             }
            
@@ -117,14 +115,17 @@ export default {
         data.append("title", this.coffee.title);
         data.append("price", this.coffee.price);
         data.append("path", this.coffee.path);
-    
+      
       axios
         .post(`http://127.0.0.1:8000/api/prices`, data )
         .then( (response) => { 
-            // console.log(response.data);
+            console.log(response)
+        })
+        .then( (response) => { 
         })
         .catch(function (error) {
           console.log(error);
+          alert("Neteisingi duomenys")
         })
         this.clearForm();
         this.fetchCoffeeList();
