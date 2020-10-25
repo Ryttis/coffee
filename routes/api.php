@@ -24,6 +24,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('prices', [PricesController::class,'index']);
 Route::get('prices/{price}', [PricesController::class,'show']);
 Route::post('prices', [PricesController::class,'store']);
-// Route::put('prices', [PricesController::class,'store']);
 Route::delete('prices/{price}', [PricesController::class,'destroy']);
 

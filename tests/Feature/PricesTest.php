@@ -4,10 +4,10 @@ use App\Models\Prices;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class PricesTest extends TestCase 
+class PricesTest extends TestCase
 {
     use RefreshDatabase;
-/**
+    /**
      * A basic test example.
      * @covers
      * @return void
@@ -19,7 +19,7 @@ class PricesTest extends TestCase
         $mostExpensive = Prices::factory()->create(['price' => 50]);
 
         $prices = Prices::highest();
-        $this->assertEquals($mostExpensive->id,$prices->first()->id);
-        $this->assertCount(6,$prices);
+        $this->assertEquals($mostExpensive->id, $prices->first()->id);
+        $this->assertCount(6, $prices);
     }
 }

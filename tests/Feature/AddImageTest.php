@@ -1,13 +1,15 @@
 <?php
 
 use App\Models\User;
+
 namespace Illuminate\Http\Testing;
+
 use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\Testing\FileFactory;
 
-class AddImageTest extends TestCase 
+class AddImageTest extends TestCase
 {
     use DatabaseMigrations;
     /**
@@ -18,16 +20,15 @@ class AddImageTest extends TestCase
     function test_only_admin_can_upload_images()
     {
         $this->withExceptionHandling();
-        $this->json('POST','api/prices')
-        ->assertStatus(401);
+        $this->json('POST', 'api/prices')
+            ->assertStatus(401);
     }
     function test_valid_image_must_be_provided()
     {
-        
-      
+
         $this->withExceptionHandling();
-        
-        $this->json('POST','api/prices',[
+
+        $this->json('POST', 'api/prices', [
             'image' => 'non-an-image'
         ])->assertStatus(422);
     }
@@ -35,9 +36,8 @@ class AddImageTest extends TestCase
     {
         // Storage::disk('public')->put('file.txt','Contents');
         $this->$this->middleware('guest')->except('logout');
-        $this->json('POST','api/prices',[
-            'image' => UploadedFile::fake()->image('coffe.jpg')]);
-    
+        $this->json('POST', 'api/prices', [
+            'image' => UploadedFile::fake()->image('coffe.jpg')
+        ]);
     }
-    
 }

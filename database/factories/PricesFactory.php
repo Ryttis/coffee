@@ -25,7 +25,7 @@ class PricesFactory extends Factory
         return [
             'title' => $this->faker->word,
             'price' => $this->faker->randomDigit,
-            'image' => $this->faker->url,
+            'path' => $this->faker->url,
         ];
     }
 }
