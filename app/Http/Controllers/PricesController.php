@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Http\Request;
@@ -14,21 +15,14 @@ class PricesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function index()
     {
         return \App\Models\Prices::all();
-
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        // 
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -38,21 +32,16 @@ class PricesController extends Controller
      */
     public function store(Request $request)
     {
-        
-        
-        $validator = $request->validate([
-            'title' => 'required',
-            'price' => 'required',
-            'path' => 'required',
-        ]);
-        
-        
-            $coffee = new Prices;
-            $coffee->fill($request->all());
-            $coffee->save();
-           
-      
-    
+
+
+        $file = $request->file('image')->store('images', 'public');
+
+
+        $coffee = new Prices();
+
+        $coffee->path = $file;
+        $coffee->fill($request->all());
+        $coffee->save();
     }
 
     /**
@@ -66,30 +55,9 @@ class PricesController extends Controller
         return \App\Models\Prices::find($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  Prices  $price
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Prices  $price)
-    {
-        // return view('edit', ['price' => $price]);
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param   Prices  $price
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Prices $price)
-    {
-        // $price->fill($request->all());
-        // $price->save();
-        // return redirect()->route('prices.index');
-    }
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -101,9 +69,8 @@ class PricesController extends Controller
     {
         $price = Prices::find($id);
 
-        if ($price->delete()){
+        if ($price->delete()) {
             return new PricesResource($price);
         }
-        
     }
 }

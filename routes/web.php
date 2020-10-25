@@ -15,7 +15,7 @@ use App\Http\Controllers\AdminController;
 */
 
 Route::get('/', function () {
-    return view('bilboard');
+    return view('welcome');
 });
 
 Route::middleware(['auth'])->group(function(){

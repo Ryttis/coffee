@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Prices;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Http\UploadedFile;
 
 class PricesFactory extends Factory
 {
@@ -24,7 +25,7 @@ class PricesFactory extends Factory
         return [
             'title' => $this->faker->word,
             'price' => $this->faker->randomDigit,
-            'path' => $this->faker->url,
+            'image' => $this->faker->url,
         ];
     }
 }

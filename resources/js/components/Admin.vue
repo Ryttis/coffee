@@ -1,6 +1,6 @@
 <template>
   <div class="admin-component">
-    <form class="mb-3" enctype="multipart/form-data">
+    <form class="mb-3" method="POST" enctype="multipart/form-data">
       <div class="form-group">
         <input
           type="text"
@@ -8,7 +8,6 @@
           placeholder="Title"
           v-model="coffee.title"
         />
-        
       </div>
       <div class="form-group">
         <input
@@ -19,22 +18,19 @@
         />
       </div>
       <div class="form-group">
-        <input
-          type="file"
-          name="image"
-          accept="image/*"
-          @change="onChange"
-        />
-        
+        <input type="file" name="image" accept="image/*" @change="onChange" />
       </div>
       <!-- <button type="submit" class="btn btn-primary btn-block">Save</button> -->
       <b-button @click="addCoffee()" variant="primary btn-block">Save</b-button>
-      <b-button v-on:click="clearForm()" variant="outline-secondary btn-block">Cancel</b-button>
+      <b-button v-on:click="clearForm()" variant="outline-secondary btn-block"
+        >Cancel</b-button
+      >
     </form>
 
     <div>
       <b-card-group deck>
         <b-card
+          img-alt="Image"
           img-top
           tag="article"
           style="min-width: 15rem"
@@ -42,17 +38,17 @@
           v-for="coffee in coffees"
           v-bind:key="coffee.id"
         >
-          <img :src= coffee.path width="150" height="150">
+          <img :src="'./storage/' + coffee.path" width="150" height="150" />
+
           <h3>{{ coffee.price }} $</h3>
 
-          <b-card-text>
+          <h4>
             {{ coffee.title }}
-          </b-card-text>
+          </h4>
 
           <button v-on:click="deleteCoffee(coffee.id)" class="btn btn-danger">
             Delete
           </button>
-          
         </b-card>
       </b-card-group>
     </div>
@@ -66,35 +62,31 @@ export default {
       errors: [],
       coffees: [],
       coffee: {
-        id: '',
-        title: '',
-        path:'',
-        price: '',
+        id: "",
+        title: "",
+        image: "",
+        price: "",
+        path: "",
       },
-     
     };
   },
   created() {
- 
     this.fetchCoffeeList();
   },
-  
-  methods: {
-    onChange(e){
-      
-            let file = e.target.files[0];
 
-            let reader = new FileReader();
-      
-            reader.readAsDataURL(file);
-            
-            reader.onload = e => {
-                this.coffee.path = e.target.result;
-              
-                
-            }
-           
-             
+  methods: {
+    onChange(e) {
+      this.coffee.image = e.target.files[0];
+
+      let file = e.target.files[0];
+      let reader = new FileReader();
+
+      reader.readAsDataURL(file);
+
+      reader.onload = (e) => {
+        this.coffee.path = e.target.result;
+        console.log(this.coffee.path);
+      };
     },
     fetchCoffeeList() {
       axios.get("http://127.0.0.1:8000/api/prices").then((response) => {
@@ -111,35 +103,35 @@ export default {
         });
     },
     addCoffee() {
-      let data = new FormData()
-        data.append("title", this.coffee.title);
-        data.append("price", this.coffee.price);
-        data.append("path", this.coffee.path);
-      
+      // const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+      let data = new FormData();
+      data.append("title", this.coffee.title);
+      data.append("price", this.coffee.price);
+      data.append("image", this.coffee.image);
+      data.append("image", this.coffee.path);
       axios
-        .post(`http://127.0.0.1:8000/api/prices`, data )
-        .then( (response) => { 
-            console.log(response)
+        .post(`http://127.0.0.1:8000/api/prices`, data)
+        .then((response) => {
+          console.log(response.data);
         })
-        .then( (response) => { 
+        .then((response) => {
+          this.clearForm();
+          this.fetchCoffeeList();
         })
         .catch(function (error) {
           console.log(error);
-          alert("Neteisingi duomenys")
-        })
-        this.clearForm();
-        this.fetchCoffeeList();
+          alert("Neteisingi duomenys");
+        });
     },
     clearForm() {
-      this.coffee.title = "", 
-      this.coffee.price = "", 
+      (this.coffee.title = ""),
+        (this.coffee.price = ""),
+        (this.coffee.image = "");
       this.coffee.path = "";
-    }
-
-  },
-    mounted() {
-      console.log("Component mounted.");
     },
- 
+  },
+  mounted() {
+    console.log("Component mounted.");
+  },
 };
 </script>

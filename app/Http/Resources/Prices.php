@@ -19,8 +19,8 @@ class Prices extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'price' => $this->price,
-            'path' => $this->path
+            'image' => $this->image,
+            'path' => $this->image
         ];
     }
-   
 }

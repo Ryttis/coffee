@@ -7,7 +7,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class PricesTest extends TestCase 
 {
     use RefreshDatabase;
-
+/**
+     * A basic test example.
+     * @covers
+     * @return void
+     */
     function test_fetches_prices_items()
     {
         Prices::factory()->count(4)->create();
