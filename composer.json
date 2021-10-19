@@ -1,7 +1,7 @@
 {
     "name": "coffee/shop",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Coffee shop billboard magagement system",
     "keywords": [
         "framework",
         "laravel"
